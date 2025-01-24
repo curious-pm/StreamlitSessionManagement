@@ -240,6 +240,7 @@ else:
 - Session data is cleared from cookies, and the login screen is shown.  
 
 ---
+### Folder and File Descriptions
 
 ```
 Session Management/
@@ -248,7 +249,7 @@ Session Management/
 └── requirements.txt           # List of dependencies required to run the project
 ```
 
-### Folder and File Descriptions
+
 
 - **`README.md`** – Provides documentation about the project, including installation, usage, and troubleshooting.
 - **`app.py`** – The main Streamlit application script handling user authentication and session management.
