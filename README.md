@@ -1,27 +1,88 @@
-# Streamlit Session Management Template
-
-## Introduction
-This project demonstrates how to implement session management in a Streamlit application. Session management ensures that users remain logged into an application for a specified duration, even across page reloads. If the session expires, the user must re-authenticate by providing their credentials.
-
-This guide provides a detailed explanation of the code, introduces the concept of session management, and outlines how to implement it effectively in Streamlit.
+## Join the Community  
+[Join Curious PM Community](https://curious.pm/) to connect, share, and learn with others!
 
 ---
 
-## What is Session Management?
-Session management is the practice of securely managing user interactions with a web application across multiple requests. It ensures that:
+A Streamlit-based tool to implement secure session management, ensuring user authentication, session persistence, and expiration handling.
 
-1. Users remain logged in while interacting with the application.
-2. Data persists across page reloads during the session.
-3. The session expires after a predefined period or upon user logout, requiring re-authentication.
+# Session Management in Streamlit
 
-In a production-level application, session management is critical for:
-- Enhancing user experience.
-- Maintaining security by preventing unauthorized access.
-- Tracking user activities.
+## About This Project
+The Streamlit Session Management Template is a simple web app built with Streamlit that allows developers to manage user sessions securely. It provides functionality to log in, maintain session persistence, and handle session expiration through encrypted cookies.
 
 ---
 
-## Steps to Implement Session Management in Streamlit
+## What This App Does  
+
+- **User Authentication:** Login system with secure session management.  
+- **Session Persistence:** Retain user sessions across page reloads.  
+- **Session Expiry:** Automatically logs out users after a set duration.  
+- **Logout Option:** Allows users to log out anytime securely.  
+- **Error Handling:** Provides feedback for incorrect credentials or session issues.  
+
+### Key Features  
+
+- **Simple Interface:** Easy-to-use login/logout system.  
+- **Encrypted Cookies:** Secure storage of session data.  
+- **Customizable Timeout:** Configurable session expiration time.  
+- **User-Friendly Notifications:** Displays alerts for session status changes.  
+
+---
+
+## How to Use the App (Step-by-Step)  
+
+### 1. Install Requirements  
+
+Make sure you have Python installed, then install required libraries:  
+
+```bash
+pip install streamlit streamlit-cookies-manager
+```
+
+---
+
+### 2. Set Up the Project  
+
+Organize your files like this:  
+
+```
+Session Management/
+├── README.md                 # Project documentation
+├── app.py                     # Main Streamlit application script
+└── requirements.txt              # List of dependencies required to run the project
+```
+
+---
+
+### 3. Run the App  
+
+Start the app with this command:  
+
+```bash
+streamlit run app/main.py
+```
+
+---
+
+### 4. Use the App  
+
+1. **Login:**  
+   - Enter your username and password to authenticate.  
+   - Upon successful login, the session is created.  
+
+2. **Session Management:**  
+   - The session persists until it expires or the user logs out.  
+
+3. **Logout:**  
+   - Click the logout button to terminate the session.  
+
+4. **Session Expiry:**  
+   - If inactive for a set period, the session expires automatically.  
+
+---
+
+### 5. Implementing It Yourself  
+
 
 ### 1. Install Required Libraries
 Install Streamlit and the `streamlit-cookies-manager` library for managing encrypted cookies:
@@ -30,8 +91,10 @@ Install Streamlit and the `streamlit-cookies-manager` library for managing encry
 pip install streamlit streamlit-cookies-manager
 ```
 
+---
+
 ### 2. Define Constants
-Set configurable parameters for the session timeout duration, cookie keys, and user credentials. For example:
+Set configurable parameters for the session timeout duration, cookie keys, and user credentials.
 
 ```python
 SESSION_TIMEOUT_MINUTES = 10  # Session validity duration in minutes
@@ -42,8 +105,10 @@ USER_CREDENTIALS = {
 }  # Replace with secure storage for production
 ```
 
+---
+
 ### 3. Initialize the Cookie Manager
-Use the `EncryptedCookieManager` to securely store session data in cookies. Pass a unique prefix for cookie keys and a secure password for encryption:
+Use the `EncryptedCookieManager` to securely store session data in cookies.
 
 ```python
 cookies = EncryptedCookieManager(
@@ -56,7 +121,10 @@ if not cookies.ready():
     st.stop()
 ```
 
+---
+
 ### 4. Implement Helper Functions
+
 - **Session Validation**: Checks if the session is still valid based on the session start time stored in cookies.
 
 ```python
@@ -88,13 +156,15 @@ def clear_session():
         cookies.save()
 ```
 
+---
+
 ### 5. Create the UI Functions
+
 - **Login UI**: Displays a login form and validates user credentials.
 
 ```python
 def login_ui():
     st.title("Login to Your Account")
-    st.markdown("Please log in to access the application.")
     username = st.text_input("Username", placeholder="Enter your username")
     password = st.text_input("Password", type="password", placeholder="Enter your password")
     
@@ -120,7 +190,10 @@ def main_app_ui():
         st.rerun()
 ```
 
+---
+
 ### 6. Add Main Logic
+
 The application logic determines whether to display the login or main UI based on session validity:
 
 ```python
@@ -133,111 +206,109 @@ else:
 
 ---
 
-## Code Explanation
+## Security Considerations
 
-### Constants
-- **`SESSION_TIMEOUT_MINUTES`**: Defines how long the session remains valid.
-- **`SESSION_COOKIE_KEY`**: The key used to store session data in cookies.
-- **`USER_CREDENTIALS`**: A dictionary of username-password pairs for authentication.
-
-### Cookies Manager
-- **`EncryptedCookieManager`**: Manages cookies with encryption for secure data storage.
-- **Parameters**:
-  - `prefix`: Adds a unique prefix to all cookie keys to avoid conflicts.
-  - `password`: Encrypts cookie data to protect it from unauthorized access.
-
-### Helper Functions
-- **`is_session_valid`**:
-  - Purpose: Checks whether the session is still valid by comparing the session start time stored in the cookies with the current time.
-  - Logic: If the difference between the current time and the session start time is less than the defined timeout (10 minutes), the session is valid.
-  - Key Points:
-    - Fetches the session start time from cookies.
-    - Uses `datetime` to calculate the time difference.
-
-- **`refresh_session`**:
-  - Purpose: Updates the session start time in the cookies to extend the session validity.
-  - Logic: Sets the session start time to the current time if it differs from the previously stored value.
-  - Key Points:
-    - Ensures cookies are saved after updating.
-    - Prevents redundant updates by checking if the value has changed.
-
-- **`clear_session`**:
-  - Purpose: Logs the user out by clearing the session data.
-  - Logic: Sets the session start time cookie to an empty string and saves the change.
-  - Key Points:
-    - Ensures cookies are updated to reflect the cleared session.
-    - Does not remove the cookie entirely but invalidates it.
-
-- **`login_ui`**:
-  - Purpose: Provides a user interface for logging in.
-  - Logic:
-    - Displays input fields for username and password.
-    - Validates the entered credentials against the predefined dictionary (`USER_CREDENTIALS`).
-    - On successful login, calls `refresh_session()` and reloads the app.
-  - Key Points:
-    - Uses `st.text_input` for secure password entry.
-    - Displays appropriate messages for success or failure.
-
-- **`main_app_ui`**:
-  - Purpose: Displays the main content of the application for logged-in users.
-  - Logic:
-    - Provides a logout button to clear the session and reload the app.
-    - Displays a welcome message to the user.
-  - Key Points:
-    - Keeps the UI simple and focused on demonstrating session management.
-
-- **Main Logic**:
-  - Purpose: Determines whether to display the login or main UI.
-  - Logic:
-    - If the session is not valid, clears the session and displays the login UI.
-    - Otherwise, displays the main application UI.
+1. **Use Secure Storage:** Store credentials securely instead of hardcoding.
+2. **Environment Variables:** Use environment variables to store sensitive information.
+3. **Session Expiry:** Implement proper session expiration handling.
+4. **Secure Cookies:** Enable HTTP-only and secure flags to prevent client-side access.
 
 ---
 
-## Methods for Production-Level Session Management
-1. **Secure Authentication**:
-   - Use secure storage for user credentials (e.g., a database).
-   - Implement hashed passwords with libraries like `bcrypt` or `hashlib`.
+## Deployment
 
-2. **Environment Variables**:
-   - Store sensitive information (e.g., encryption passwords) in environment variables.
-
-3. **Token-Based Authentication**:
-   - Use JWT or OAuth tokens for robust session management.
-
-4. **Session Expiry**:
-   - Implement idle timeout or activity-based session expiration.
-
-5. **Secure Cookies**:
-   - Enable HTTP-only and secure flags for cookies to prevent client-side access.
+1. **Secure API Keys:** Store credentials securely using environment variables or `.streamlit/secrets.toml`.
+2. **Customize the Interface:** Modify layout and styling using Streamlit widgets.
+3. **Deploy the Application:** Use Heroku, AWS, or Streamlit Cloud to deploy your app.
 
 ---
 
-## How to Run
-1. Install the required libraries:
+## What Happens at Each Step  
 
-   ```bash
-   pip install streamlit streamlit-cookies-manager
-   ```
+### 1. User Logs In  
+- Credentials are verified, and an encrypted session cookie is created.  
+- Session start time is stored securely in cookies.  
 
-2. Save the code as `app.py`.
+### 2. Session Persistence  
+- The app checks for an active session across page reloads.  
+- If valid, the user remains logged in.  
 
-3. Run the application:
+### 3. Session Timeout  
+- If the session exceeds the timeout limit, the user is logged out automatically.  
 
-   ```bash
-   streamlit run app.py
-   ```
-
-4. Use the following credentials to log in:
-   - **Username**: `admin`
-   - **Password**: `password123`
+### 4. User Logs Out  
+- Session data is cleared from cookies, and the login screen is shown.  
 
 ---
 
-## Conclusion
-This template demonstrates how to implement secure session management in Streamlit. It uses encrypted cookies to store session data and ensures a seamless user experience while maintaining security. Students can extend this template by adding advanced features like database-backed authentication or multi-user roles.
+```
+Session Management/
+├── README.md                 # Project documentation
+├── app.py                     # Main Streamlit application script
+└── requirements.txt           # List of dependencies required to run the project
+```
+
+### Folder and File Descriptions
+
+- **`README.md`** – Provides documentation about the project, including installation, usage, and troubleshooting.
+- **`app.py`** – The main Streamlit application script handling user authentication and session management.
+- **`requirements.txt`** – Contains the list of dependencies needed to run the application.
+
 
 ---
 
-Feel free to explore, modify, and share this template to understand and teach session management effectively!
+## Hosted App  
 
+[View Live App](#) *(Insert hosted link here)*  
+
+---
+
+## Screenshots  
+
+### Login Page:
+*(Insert screenshot of login page)*  
+
+### Logged-In Session:
+*(Insert screenshot of logged-in view)*  
+
+### Session Expiry:
+*(Insert screenshot showing session expiration notification)*  
+
+---
+
+## Video Overview  
+*A short video walkthrough will be provided explaining the app's features and usage.*  
+
+---
+
+## Security Considerations  
+
+- **Do not share your API keys publicly.**  
+- Use environment variables to securely store credentials.  
+- Regularly rotate API keys for added security.  
+
+---
+
+## Common Issues & Solutions  
+
+1. **Incorrect Credentials:**  
+   - Double-check the username and password entered.  
+
+2. **Session Not Persisting:**  
+   - Ensure cookies are enabled in your browser settings.  
+
+3. **App Not Running:**  
+   - Run the correct command: `streamlit run app/main.py`.  
+
+4. **Session Timeout Issues:**  
+   - Adjust timeout settings in `session_utils.py`.  
+
+---
+
+## Security Tips  
+
+- Never store credentials in source code.  
+- Use HTTPS for secure deployment.  
+- Regularly review session logs for unusual activities.  
+
+---

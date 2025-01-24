@@ -1,1 +1,11 @@
-streamlit-cookies-manager
+# Core dependencies
+streamlit  # Ensure compatibility with your Streamlit app
+
+# Session management and security
+streamlit-cookies-manager  # For handling encrypted cookies
+
+# Additional dependencies (if needed)
+cryptography  # Required for encrypted cookies management
+
+# Optional dependencies for deployment and optimization
+gunicorn  # For production deployment with WSGI servers
