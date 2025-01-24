@@ -267,13 +267,10 @@ Session Management/
 ## Screenshots  
 
 ### Login Page:
-*(Insert screenshot of login page)*  
+![Image](https://github.com/user-attachments/assets/e6ce1636-4e36-4b34-83eb-328b34e07df1)
 
 ### Logged-In Session:
-*(Insert screenshot of logged-in view)*  
-
-### Session Expiry:
-*(Insert screenshot showing session expiration notification)*  
+![Image](https://github.com/user-attachments/assets/b3baf3bf-b55e-4ce6-ad53-60978fb6a34c)
 
 ---
 
