@@ -260,7 +260,7 @@ Session Management/
 
 ## Hosted App  
 
-[View Live App](#) *(Insert hosted link here)*  
+[View Live App](https://sessionmanagement-template.streamlit.app/) 
 
 ---
 
